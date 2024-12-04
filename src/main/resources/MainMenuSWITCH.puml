@@ -1,0 +1,15 @@
+@startuml
+participant User
+participant MainMenu
+
+User -> MainMenu : choose_page(choice)
+
+alt
+    MainMenu -> MainMenu :rent_clothes()
+else
+    MainMenu -> MainMenu : secondHand()
+else
+    MainMenu -> MainMenu : handMade()
+
+end
+@enduml

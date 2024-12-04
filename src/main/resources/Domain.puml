@@ -1,0 +1,40 @@
+@startuml
+class User {
+    - is_guest: boolean
+    - username: String
+    - password: String
+    - wallet : int
+    - clothesForSale
+    - rentableClothes
+
+}
+
+class Login {
+    - registered_users: file
+    + is_username_taken()
+    + create_user()
+    + login()
+
+}
+class Menu{
+    - choose_page()
+
+}
+
+class OurWebsite{
+    -main()
+}
+
+class RentClothes{
+}
+
+class SecondHand{
+}
+
+
+User " " -- " " Login
+OurWebsite " " -- " " Menu
+Menu " " -- " " RentClothes
+Menu " " -- " " SecondHand
+Menu " " -- " " HandMade
+@enduml
