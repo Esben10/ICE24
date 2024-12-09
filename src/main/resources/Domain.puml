@@ -25,16 +25,15 @@ class OurWebsite{
     -main()
 }
 
-class RentClothes{
+class UserWardrobe{
 }
 
-class SecondHand{
-}
+
 
 
 User " " -- " " Login
 OurWebsite " " -- " " Menu
-Menu " " -- " " RentClothes
-Menu " " -- " " SecondHand
-Menu " " -- " " HandMade
+Menu " " -- " " UserShop
+Menu " " -- " " UserWardrobe
+
 @enduml
