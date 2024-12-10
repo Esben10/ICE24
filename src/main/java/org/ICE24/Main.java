@@ -10,7 +10,7 @@ public class Main {
         UserShop persshop = new UserShop();
 
 
-        persshop.viewAllItems();
+
 
         /*Shirt bluse = new Shirt("slidt","men sej",1000,0);
         System.out.println(bluse);
