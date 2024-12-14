@@ -1,0 +1,6 @@
+USER NAME: per
+USER ID: 1
+
+    TYPE |    CONDITION |                      DESCRIPTION |  PRICE | SIZE 
+   Shirt |    god stand |                      grå stribet |  200.0 |    0 
+     Hat |        slidt |                              blå |  125.0 |    0 

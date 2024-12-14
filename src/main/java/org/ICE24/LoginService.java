@@ -2,7 +2,6 @@ package org.ICE24;
 
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
@@ -24,32 +23,24 @@ public class LoginService {
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
 
+        User newUser = new User(username, password);
 
-        if (saveCredentials(username, password)) {
+        if (newUser.saveUser()) {
             System.out.println("User created successfully!");
         } else {
             System.out.println("Failed to create user. Please try again.");
             return null;
         }
-        return new User(username, password);
+        return newUser;
     }
 
-
-    private static boolean saveCredentials(String username, String password) {
-        try (FileWriter writer = new FileWriter("users.txt", true)) {
-            writer.write(username + ":" + password + System.lineSeparator());
-            return true;
-        } catch (IOException e) {
-            System.err.println("Error saving credentials: " + e.getMessage());
-            return false;
-        }
-    }
 
     public static boolean userExists(String username) {
         try (Scanner reader = new Scanner(new File("users.txt"))) {
             while (reader.hasNextLine()) {
                 String line = reader.nextLine();
-                if (line.startsWith(username)) {
+                String name = line.split(":")[1].trim();
+                if (name.equals(username)) {
                     return true;
                 }
             }
@@ -60,6 +51,46 @@ public class LoginService {
         }
     }
 
+    public static boolean login() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("=== Login to your account ===");
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+        while (!checkPassword(username, password)) {
+            System.out.print("Enter username: ");
+            username = scanner.nextLine();
+
+            System.out.print("Enter password: ");
+            password = scanner.nextLine();
+
+        }
+        return true;
+
+    }
+
+    public static boolean checkPassword(String username1, String password1) {
+        try (Scanner reader = new Scanner(new File("users.txt"))) {
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                String[] splitLine = line.split(":");
+                String username2 = splitLine[1].trim();
+                String password2 = splitLine[2].trim();
+                if (username1.equals(username2) && password1.equals(password2)) {
+                    System.out.println("Login successful!");
+                    return true;
+                }
+            }
+            return false;
+        } catch (IOException e) {
+            System.err.println("Error logging in" + e.getMessage());
+            return false;
+        }
+    }
 }
 
 

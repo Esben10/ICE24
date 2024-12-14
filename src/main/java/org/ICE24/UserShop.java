@@ -1,16 +1,21 @@
 package org.ICE24;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Scanner;
+import java.io.FileWriter;
 
 public class UserShop {
-    private ArrayList<Item> items = new ArrayList<Item>();
+    public static ArrayList<UserShop> allUserShops = new ArrayList<>();
 
-    public UserShop(){
+    private final ArrayList<Item> items;
+    public User owner;
+
+    public UserShop(User user){
+        this.items = new ArrayList<Item>();
+        this.owner = user;
+        allUserShops.add(this);
     }
-
-
 
     public boolean createItem(){
         Scanner scanner = new Scanner(System.in);
@@ -37,8 +42,6 @@ public class UserShop {
         }
         addItem(item);
         return true;
-
-
     }
 
     public void createItemWithRetries() {
@@ -48,8 +51,13 @@ public class UserShop {
         }
     }
 
-    public void viewAllItems(){
-        System.out.println(items);
+    public void viewItems(){
+        for (Item item : items) {
+            String itemFormat = "%-8s | %-12s | %-32s | %6s | %4s";
+            System.out.printf((itemFormat) + "%n", item.type, item.condition, item.description, item.price, item.size);
+        }
+
+
     }
 
     public void addItem(Item item){
@@ -63,6 +71,23 @@ public class UserShop {
 
 
 
+    public void saveItems(){
+        try (FileWriter writer = new FileWriter(owner.username + "_items.txt", false)) {
+            writer.write("USER NAME: " + owner.username + "\n");
+            writer.write("USER ID: " + owner.id + "\n\n");
+            String format = "%-8s | %-12s | %-32s | %6s | %4s \n\n";
+            String formatted = String.format(format, "TYPE", "CONDITION", "DESCRIPTION", "PRICE", "SIZE");
+            writer.write(formatted);
+
+            for (Item item : items) {
+                String formattedItem = String.format(format, item.type, item.condition, item.description, item.price, item.size);
+                writer.write(formattedItem);
+            }
+
+        } catch (IOException e) {
+            System.out.println("failed to save items");
+        }
+    }
 
 
     public void sellItem(){
@@ -74,4 +99,18 @@ public class UserShop {
     public void searchItem(){
     }
 
+    public static void viewAllItems(){
+        for (UserShop us : allUserShops){
+            us.viewItems();
+        }
+    }
+
+
+
 }
+
+
+
+
+
+
