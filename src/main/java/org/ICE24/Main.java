@@ -5,6 +5,7 @@ public class Main {
     public static void main(String[] args) {
 
         User.loadIdCounter();
+        LoginService.loadUsers();
         Menu.showLoginMenu();
 
         //User per = new User("per","per");

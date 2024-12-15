@@ -7,6 +7,13 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class LoginService {
+    private static User currentUser;
+
+
+    public static User getCurrentUser(){
+        return currentUser;
+    }
+
 
     public static User createUser() {
         Scanner scanner = new Scanner(System.in);
@@ -23,7 +30,7 @@ public class LoginService {
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
 
-        User newUser = new User(username, password);
+        User newUser = User.createNewUser(username, password);
 
         if (newUser.saveUser()) {
             System.out.println("User created successfully!");
@@ -69,6 +76,8 @@ public class LoginService {
             password = scanner.nextLine();
 
         }
+
+        currentUser = User.getUser(username);
         return true;
 
     }
@@ -90,6 +99,30 @@ public class LoginService {
             System.err.println("Error logging in" + e.getMessage());
             return false;
         }
+    }
+
+    public static void loadUsers() {
+        try {
+            Scanner scanner = new Scanner(new File("users.txt"));
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] splits = line.split(":");
+                int id = Integer.parseInt(splits[0].trim());
+                String username = splits[1].trim();
+                String password = splits[2].trim();
+
+                User newUser = new User(username, password, id);
+                newUser.shop = UserShop.loadItems(newUser);
+
+                System.out.println(username);
+            }
+
+
+        } catch (Exception e) {
+            System.err.println("Error loading users: " + e.getMessage());
+        }
+
     }
 }
 

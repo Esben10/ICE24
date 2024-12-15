@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class User {
@@ -14,14 +15,34 @@ public class User {
     public UserShop shop;
 
     private static int idCounter;
+    protected static ArrayList<User> allUsers = new ArrayList<>();
 
 
-    public User(String username, String password) {
-        this.id = User.idCounter++;
+    public User(String username, String password, int id) {
+
         this.username = username;
         this.password = password;
-        this.shop = new UserShop(this);
+        this.id = id;
+        this.shop = null;
+        allUsers.add(this);
     }
+
+    public static User createNewUser(String username, String password) {
+
+        User newUser = new User(username, password, User.idCounter++);
+        newUser.shop = UserShop.createNewUserShop(newUser);
+        return newUser;
+    }
+
+    public static User getUser(String username) {
+        for (User user : allUsers) {
+            if (username.equals(user.username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
 
     public boolean saveUser() {
         try (FileWriter writer = new FileWriter("users.txt", true)) {

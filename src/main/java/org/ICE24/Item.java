@@ -24,6 +24,35 @@ public abstract class Item {
         //return this.type + " : " +condition + " : "  + description + " : " + price + " : " + size;
     }
 
+    public static Item loadItem(String line) {
+        try {
+            String[] splits = line.split("\\|");
+            String type = splits[0].trim();
+            String condition = splits[1].trim();
+            String description = splits[2].trim();
+            double price = Double.parseDouble(splits[3].trim());
+            int size = Integer.parseInt(splits[4].trim());
+
+            switch (type) {
+
+                case "Shirt":
+                    return new Shirt(condition, description, price, size);
+
+                case "Pants":
+                    return new Pants(condition, description, price, size);
+
+                case "Hat":
+                    return new Hat(condition, description, price);
+
+                default:
+                    return null;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+
+    }
 
 
 }

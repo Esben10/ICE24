@@ -1,0 +1,5 @@
+USER NAME: Bamse
+USER ID: 14
+
+TYPE     | CONDITION    | DESCRIPTION                      |  PRICE | SIZE 
+

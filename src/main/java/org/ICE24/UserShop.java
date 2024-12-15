@@ -1,5 +1,7 @@
 package org.ICE24;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -7,6 +9,7 @@ import java.io.FileWriter;
 
 public class UserShop {
     public static ArrayList<UserShop> allUserShops = new ArrayList<>();
+
 
     private final ArrayList<Item> items;
     public User owner;
@@ -16,6 +19,7 @@ public class UserShop {
         this.owner = user;
         allUserShops.add(this);
     }
+
 
     public boolean createItem(){
         Scanner scanner = new Scanner(System.in);
@@ -41,6 +45,7 @@ public class UserShop {
             return false;
         }
         addItem(item);
+        saveItems();
         return true;
     }
 
@@ -75,9 +80,9 @@ public class UserShop {
         try (FileWriter writer = new FileWriter(owner.username + "_items.txt", false)) {
             writer.write("USER NAME: " + owner.username + "\n");
             writer.write("USER ID: " + owner.id + "\n\n");
-            String format = "%-8s | %-12s | %-32s | %6s | %4s \n\n";
+            String format = "%-8s | %-12s | %-32s | %6s | %4s \n";
             String formatted = String.format(format, "TYPE", "CONDITION", "DESCRIPTION", "PRICE", "SIZE");
-            writer.write(formatted);
+            writer.write(formatted + "\n");
 
             for (Item item : items) {
                 String formattedItem = String.format(format, item.type, item.condition, item.description, item.price, item.size);
@@ -105,7 +110,30 @@ public class UserShop {
         }
     }
 
+    public static UserShop loadItems(User owner) throws FileNotFoundException {
 
+        UserShop US = new UserShop(owner);
+
+        Scanner scanner = new Scanner(new File(owner.username + "_items.txt"));
+        scanner.nextLine();
+        scanner.nextLine();
+        scanner.nextLine();
+        scanner.nextLine();
+        scanner.nextLine();
+        while (scanner.hasNextLine()){
+            String line = scanner.nextLine();
+            Item newItem = Item.loadItem(line);
+            US.items.add(newItem);
+        }
+        return US;
+    }
+
+    public static UserShop createNewUserShop(User user){
+        UserShop newShop = new UserShop(user);
+        newShop.saveItems();
+
+        return newShop;
+    }
 
 }
 

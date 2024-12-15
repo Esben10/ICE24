@@ -1,4 +1,6 @@
-0 : esben : esb
-1 : esben : moldtus
-0 : esben : moldt
-2 : Esben : Moldt
+0 : Esben : Moldt
+1 : Bamse : Lamse
+2 : Lamse : Damse
+4 : Jepsi : Debsi
+6 : lala : blabla
+12 : lulu : poo

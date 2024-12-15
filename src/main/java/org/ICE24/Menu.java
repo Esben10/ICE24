@@ -57,7 +57,8 @@ public class Menu {
             System.out.println("\nWelcome");
             System.out.println("1. Browse Items");
             System.out.println("2. Add an item to your own UserShop!");
-            System.out.println("3. Logout");
+            System.out.println("3. View your items");
+            System.out.println("4. Logout");
 
             int choice = 0;
             try {
@@ -75,16 +76,16 @@ public class Menu {
                     break;
 
                 case 2:
-                    // Temporarry hack
-                    UserShop persshop = new UserShop(new User("Per", "Hansen"));
 
-                    persshop.createItem();
-
-                    // loggedInUser.userShop.createItem();
+                    LoginService.getCurrentUser().shop.createItem();
 
                     break;
-
                 case 3:
+
+                    LoginService.getCurrentUser().shop.viewItems();
+
+                    break;
+                case 4:
 
                     running = false;
                     showLoginMenu();
