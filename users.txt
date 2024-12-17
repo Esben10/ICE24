@@ -1,2 +1,3 @@
 0 : Esben : Besben
 1 : Bamse : Lamse
+2 : Ole : Olesen

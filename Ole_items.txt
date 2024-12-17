@@ -1,0 +1,7 @@
+USER NAME: Ole
+USER ID: 2
+
+TYPE     | CONDITION    | DESCRIPTION                      |  PRICE | SIZE 
+
+Hat      | hullet       | grønne striber                   |  100.0 |    0 
+Shirt    | god stand    | navy blå                         |  250.0 |    0 
