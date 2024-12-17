@@ -1,0 +1,7 @@
+USER NAME: Olivia
+USER ID: 1
+
+TYPE     | CONDITION    | DESCRIPTION                      |  PRICE | SIZE 
+
+Hat      | ikkebrugt    | pink mønster                     |  250.0 |    0 
+Pants    | slidt        | blå                              |  135.0 |    0 

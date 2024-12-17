@@ -1,0 +1,7 @@
+USER NAME: Bente
+USER ID: 2
+
+TYPE     | CONDITION    | DESCRIPTION                      |  PRICE | SIZE 
+
+Shirt    | slidt        | grøn                             |  460.0 |    0 
+Pants    | ny           | seje gule striber                |  500.0 |    0 
