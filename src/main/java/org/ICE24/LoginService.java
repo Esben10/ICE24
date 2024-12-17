@@ -1,59 +1,129 @@
-package org.ICE24; // Defines the package for the class.
+package org.ICE24;
 
-import java.io.File; // Imports the File class for handling file operations.
-import java.io.FileNotFoundException; // Imports exception class for handling missing files.
-import java.io.FileWriter; // Imports the FileWriter class for writing to files.
-import java.io.IOException; // Imports the IOException class for handling I/O errors.
-import java.util.Scanner; // Imports the Scanner class for reading input and files.
 
-public class LoginService { // Defines the LoginService class for managing user operations.
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 
-    public static User createUser() { // Method to create a new user.
-        Scanner scanner = new Scanner(System.in); // Creates a scanner to read input from the console.
+public class LoginService {
+    private static User currentUser;
 
-        System.out.println("=== Create a New User ==="); // Prints a header for user creation.
-        System.out.print("Enter username: "); // Prompts the user to enter a username.
-        String username = scanner.nextLine(); // Reads the entered username.
 
-        if (userExists(username)) { // Checks if the username already exists in the system.
-            System.out.println("Username already exists"); // Notifies the user if the username is taken.
-            return null; // Returns null to indicate failure to create the user.
-        }
-
-        System.out.print("Enter password: "); // Prompts the user to enter a password.
-        String password = scanner.nextLine(); // Reads the entered password.
-
-        if (saveCredentials(username, password)) { // Attempts to save the user's credentials.
-            System.out.println("User created successfully!"); // Confirms successful user creation.
-        } else { // Handles failure to save credentials.
-            System.out.println("Failed to create user. Please try again."); // Informs the user about the failure.
-            return null; // Returns null to indicate failure.
-        }
-        return new User(username, password); // Returns a new User object with the provided credentials.
+    public static User getCurrentUser(){
+        return currentUser;
     }
 
-    private static boolean saveCredentials(String username, String password) { // Saves user credentials to a file.
-        try (FileWriter writer = new FileWriter("users.txt", true)) { // Opens "users.txt" in append mode.
-            writer.write(username + ":" + password + System.lineSeparator()); // Writes credentials in "username:password" format.
-            return true; // Returns true to indicate success.
-        } catch (IOException e) { // Handles exceptions during file writing.
-            System.err.println("Error saving credentials: " + e.getMessage()); // Prints the error message.
-            return false; // Returns false to indicate failure.
+
+    public static User createUser() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("=== Create a New User ===");
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+
+        if (userExists(username)) {
+            System.out.println("Username already exists");
+            return null;
         }
+
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+        User newUser = User.createNewUser(username, password);
+
+        if (newUser.saveUser()) {
+            System.out.println("User created successfully!");
+        } else {
+            System.out.println("Failed to create user. Please try again.");
+            return null;
+        }
+        return newUser;
     }
 
-    public static boolean userExists(String username) { // Checks if a username already exists in the system.
-        try (Scanner reader = new Scanner(new File("users.txt"))) { // Opens "users.txt" for reading.
-            while (reader.hasNextLine()) { // Reads the file line by line.
-                String line = reader.nextLine(); // Reads the current line.
-                if (line.startsWith(username)) { // Checks if the line starts with the username.
-                    return true; // Returns true if the username exists.
+
+    public static boolean userExists(String username) {
+        try (Scanner reader = new Scanner(new File("users.txt"))) {
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                String name = line.split(":")[1].trim();
+                if (name.equals(username)) {
+                    return true;
                 }
             }
-            return false; // Returns false if the username is not found.
-        } catch (IOException e) { // Handles exceptions during file reading.
-            System.err.println("Error looking up user: " + e.getMessage()); // Prints the error message.
-            return false; // Returns false to indicate failure or missing file.
+            return false;
+        } catch (IOException e) {
+            System.err.println("Error looking up user: " + e.getMessage());
+            return false;
         }
     }
+
+    public static boolean login() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("=== Login to your account ===");
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+        while (!checkPassword(username, password)) {
+            System.out.print("Enter username: ");
+            username = scanner.nextLine();
+
+            System.out.print("Enter password: ");
+            password = scanner.nextLine();
+
+        }
+
+        currentUser = User.getUser(username);
+        return true;
+
+    }
+
+    public static boolean checkPassword(String username1, String password1) {
+        try (Scanner reader = new Scanner(new File("users.txt"))) {
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                String[] splitLine = line.split(":");
+                String username2 = splitLine[1].trim();
+                String password2 = splitLine[2].trim();
+                if (username1.equals(username2) && password1.equals(password2)) {
+                    System.out.println("Login successful!");
+                    return true;
+                }
+            }
+            return false;
+        } catch (IOException e) {
+            System.err.println("Error logging in" + e.getMessage());
+            return false;
+        }
+    }
+
+    public static void loadUsers() {
+        try {
+            Scanner scanner = new Scanner(new File("users.txt"));
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] splits = line.split(":");
+                int id = Integer.parseInt(splits[0].trim());
+                String username = splits[1].trim();
+                String password = splits[2].trim();
+
+                User newUser = new User(username, password, id);
+                newUser.shop = UserShop.loadItems(newUser);
+
+                System.out.println(username);
+            }
+
+
+        } catch (Exception e) {
+            System.err.println("Error loading users: " + e.getMessage());
+        }
+
+    }
 }
+
+

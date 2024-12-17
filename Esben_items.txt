@@ -1,0 +1,6 @@
+USER NAME: Esben
+USER ID: 0
+
+TYPE     | CONDITION    | DESCRIPTION                      |  PRICE | SIZE 
+
+Shirt    | slidt        | gul                              |  150.0 |    0 
