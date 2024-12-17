@@ -59,7 +59,7 @@ public class UserShop {
     public void viewItems(){
         for (Item item : items) {
             String itemFormat = "%-8s | %-12s | %-32s | %6s | %4s";
-            System.out.printf((itemFormat) + "%n", item.type, item.condition, item.description, item.price, item.size);
+            System.out.printf(itemFormat + "%n", item.type, item.condition, item.description, item.price, item.size);
         }
 
 
@@ -105,10 +105,16 @@ public class UserShop {
     }
 
     public static void viewAllItems(){
+        int counter = 1;
         for (UserShop us : allUserShops){
-            us.viewItems();
+            System.out.printf("-----   %S   -----%n", us.owner);
+            for (Item item : us.items) {
+                String itemFormat = "%3d | %-8s | %-12s | %-32s | %6s DKK | %4s | %-10s";
+                System.out.printf(itemFormat + "%n", counter++, item.type, item.condition, item.description, item.price, item.size, us.owner);
+            }
         }
     }
+
 
     public static UserShop loadItems(User owner) throws FileNotFoundException {
 

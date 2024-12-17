@@ -1,5 +1,0 @@
-USER NAME: Jepsi
-USER ID: 16
-
-TYPE     | CONDITION    | DESCRIPTION                      |  PRICE | SIZE 
-

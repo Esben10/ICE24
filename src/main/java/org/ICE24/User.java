@@ -11,7 +11,6 @@ public class User {
     public int id;
     public String username;
     public String password;
-    public int age;
     public UserShop shop;
 
     private static int idCounter;
@@ -26,6 +25,11 @@ public class User {
         this.shop = null;
         allUsers.add(this);
     }
+
+    public String toString(){
+        return username;
+    }
+
 
     public static User createNewUser(String username, String password) {
 

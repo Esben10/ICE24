@@ -1,5 +1,0 @@
-USER NAME: Lamse
-USER ID: 15
-
-TYPE     | CONDITION    | DESCRIPTION                      |  PRICE | SIZE 
-

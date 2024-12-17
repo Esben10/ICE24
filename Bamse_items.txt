@@ -1,5 +1,7 @@
 USER NAME: Bamse
-USER ID: 14
+USER ID: 1
 
 TYPE     | CONDITION    | DESCRIPTION                      |  PRICE | SIZE 
 
+Shirt    | slidt        | blå                              |  120.0 |    0 
+Pants    | hullet       | gule                             |  200.0 |    0 
