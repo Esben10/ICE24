@@ -3,4 +3,4 @@ USER ID: 0
 
 TYPE     | CONDITION    | DESCRIPTION                      |  PRICE | SIZE 
 
-Shirt    | slidt        | gul                              |  150.0 |    0 
+Hat      | gammel       | grøn mønster                     |   50.0 |    0 

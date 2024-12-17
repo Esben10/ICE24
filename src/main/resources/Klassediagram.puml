@@ -1,0 +1,59 @@
+@startuml
+class User {
+    -int id;
+    -String username;
+    -String password;
+    -UserShop shop;
+    -int idCounter;
+    -ArrayList<User> allUsers
+    +toString()
+    +createNewUser()
+    +getUser()
+    +saveUser()
+    +loadIdCounter()
+
+}
+
+class LoginService {
+    -User currentUser
+    +User createUser()
+    +boolean userExists(String username)
+    +boolean login()
+    +boolean checkPassword(String username1, String password1)
+    +void loadUsers()
+}
+class UserShop{
+    -ArrayList<UserShop> allUserShops
+    -ArrayList<Item> items
+    -User owner;
+    +boolean createItem()
+    +void viewItems()
+    +void addItem(Item item)
+    +void saveItems()
+    +viewAllItems()
+    +UserShop loadItems(User owner)
+    +UserShop createNewUserShop(User user)
+}
+class Item {
+    -String type;
+    -String condition;
+    -String description;
+    -double price;
+    -int size;
+}
+class Menu{
+   +void showLoginMenu()
+   +void showMainMenu()
+
+}
+
+
+User " " -- " " LoginService
+User " " -- " " UserShop
+Item " " <-- " " Hat
+Item " " <-- " " Shirt
+Item " " <-- " " Pants
+UserShop " " -- " " Item
+
+
+@enduml

@@ -70,7 +70,6 @@ public class Menu {
             switch (choice) {
                 case 1:
                     UserShop.viewAllItems();
-                    running = false;
 
 
                     break;

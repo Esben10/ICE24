@@ -1,6 +1,0 @@
-USER NAME: lulu
-USER ID: 19
-
-TYPE     | CONDITION    | DESCRIPTION                      |  PRICE | SIZE 
-
-Shirt    | slidt        | gul                              |  200.0 |    0 
